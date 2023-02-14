@@ -1,3 +1,3 @@
 # smth.club
 
-smth.club - Say Something! This is game where the goal to create a post that will last the longest without being deleted by the other players. Every players has the power to both add and delete items from the list. 
+smth.club is a game where the goal is to create a post that will last the longest without being deleted by other players. Every player has the power to both add and delete items to and from the list. 
