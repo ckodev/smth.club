@@ -25,7 +25,13 @@ if (!$conn) {
 // Set the connection charset to UTF-8
 mysqli_set_charset($conn, 'utf8');
 
-$text = str_replace(array("\r\n", "\r", "\n"), '\n', $text);
+// Replace multiple backslashes with a single backslash character
+$text = preg_replace('/\\\\+/', '\\\\', $text);
+
+$text = str_replace(array("\r\n", "\r", "\n", "\"", "'", ";", "%"), array('\n', '\n', '\n', '\"', "\'", '\;', '\%'), $text);
+
+$text = mysqli_real_escape_string($conn, $text);
+
 
 
 // Insert text, time and color into the database
@@ -42,7 +48,10 @@ if (mysqli_query($conn, $sql)) {
          $time = $row['time'];
          $color = $row['color'];
 
-         // Decode newline characters back into line breaks
+         
+         // Decode newline characters, double quotes, single quotes, semicolons, and percent signs
+         $text = str_replace(array('\n', '\"', "\'", '\;', '\%', '\n'), array("\n", '"', "'", ';', '%', '<br>'), $text);
+
          $text = str_replace('\n', '<br>', $text);
          
          // Encode the result as a JSON object and send it back to the front-end
