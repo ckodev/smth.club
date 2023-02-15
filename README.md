@@ -21,6 +21,7 @@ The idea behind the game is that any post that takes the record of longest post,
 * A fork of the same game but with images instead of text. 
 
 ## Issues 
+* At the moment when longest post rolls over to 1 day, it displays `23h 0m` until it reaches `23h 1m` then it displays `1d 0h 1m` This last one is the desired display. 
 * Emoji support - Currently some emoji's work but most do not and there seems to be discrepencies between mobile and desktop. 
 * General code review - I am a novice dev and any review would be much appreciated 
 * Security and bot's 
