@@ -4,6 +4,7 @@ const addButton = document.querySelector('#addButton');
 const list = document.querySelector('#list');
 const main = document.querySelector('#input-btn-container')
 const button = document.getElementById("info-button");
+const longestPostButton = document.getElementById("subtitle");
 const descriptionContainer = document.querySelector(".description-container");
 const closeInfo = document.getElementById("close-container");
 
@@ -13,6 +14,14 @@ const closeStats = document.getElementById("close-stats-container");
 
 
 closeStats.addEventListener("click", function() {
+    statsContainer.classList.toggle("active");
+    if (descriptionContainer.classList.contains("active")) {
+        descriptionContainer.classList.remove("active");
+    }
+
+});
+
+longestPostButton.addEventListener("click", function() {
     statsContainer.classList.toggle("active");
     if (descriptionContainer.classList.contains("active")) {
         descriptionContainer.classList.remove("active");
@@ -97,6 +106,7 @@ fetch('get-data.php')
         const li = document.createElement('li');
         // Set the background color of the li element to the saved color
         li.style.backgroundColor = row.color;
+        
         /// Create a new Date object from the addedAt timestamp
         const addedAt = row.time;
 
@@ -108,14 +118,10 @@ fetch('get-data.php')
         if (timeDiff > maxTimeDiff) {
             maxTimeDiff = timeDiff;
             longestPost = row;
-            saveLongestPost(longestPost,maxTimeDiff) 
-        } else {
-            getLongestPost();
         }
         const diffSeconds = Math.ceil(timeDiff / (1000));
         let diffMinutes = Math.ceil(diffSeconds / 60);
         let diffHours = Math.ceil(diffMinutes / 60);
-       
 
         let postLength = "";
 
@@ -125,7 +131,7 @@ fetch('get-data.php')
             postLengthSeconds = Math.floor(diffSeconds % 60);
             postLengthMinutes = Math.floor(diffMinutes);
             postLength = `${postLengthMinutes}m ${postLengthSeconds}s`;
-        } else if (diffHours <= 24) {
+        } else if (diffHours < 24) {
             postLengthMinutes = Math.floor(diffMinutes % 60);
             postLengthHours = Math.floor(diffHours);
             postLength = `${postLengthHours}h ${postLengthMinutes}m`;
@@ -135,11 +141,18 @@ fetch('get-data.php')
             postLengthMinutes = Math.floor(diffMinutes % 60);
             postLength = `${postLengthDays}d ${postLengthHours}h ${postLengthMinutes}m`;
         }
+
+
+
         li.innerHTML = `<p class="content">${row.text}</p>`;
 
         // Create a new div element to wrap the timeSinceAdded and delete button
         const infoDiv = document.createElement('div');
         infoDiv.innerHTML = `<p class="time">${postLength}</p>`;
+
+        const backGroundDiv = document.createElement('div');
+        backGroundDiv.setAttribute('class', 'background-div')
+        li.appendChild(backGroundDiv);
 
         // Create a new button element
         const deleteButton = document.createElement('button');
@@ -157,6 +170,8 @@ fetch('get-data.php')
     });
     if (maxTimeDiff === 0) {
         getLongestPost()
+    } else {
+        saveLongestPost(longestPost,maxTimeDiff) 
     }
 });
 
@@ -175,6 +190,7 @@ function getLongestPost() {
 }
 
 function saveLongestPost(longestPost, maxTimeDiff) {
+            
     longestPost['timeDiff'] = maxTimeDiff
     fetch('save-to-stats.php', { 
         method: 'POST', 
@@ -201,7 +217,6 @@ function updateLongestPost(parsedData) {
     let timeHours = Math.ceil(timeMinutes / 60);
 
     let postLength = "";
-    
 
     if (timeSeconds <= 60) {
         postLength = `${timeSeconds}s`;
@@ -209,7 +224,7 @@ function updateLongestPost(parsedData) {
         postLengthSeconds = Math.floor(timeSeconds % 60);
         postLengthMinutes = Math.floor(timeMinutes);
         postLength = `${postLengthMinutes}m ${postLengthSeconds}s`;
-    } else if (timeHours <= 24) {
+    } else if (timeHours < 24) {
         postLengthMinutes = Math.floor(timeMinutes % 60);
         postLengthHours = Math.floor(timeHours);
         postLength = `${postLengthHours}h ${postLengthMinutes}m`;
@@ -218,17 +233,34 @@ function updateLongestPost(parsedData) {
         postLengthHours = Math.floor(timeHours % 24);
         postLengthMinutes = Math.floor(timeMinutes % 60);
         postLength = `${postLengthDays}d ${postLengthHours}h ${postLengthMinutes}m`;
+        
     }
 
     statsText.innerHTML = `${parsedData.text}`;
     statsTime.innerHTML = `Lasted: ${postLength}`;
-    subtitle.innerHTML = `Longest Post: <span class="front-page-time">${postLength}</span>`
+    subtitle.innerHTML = `Longest Post: <span class="front-page-time">${postLength}</span>`;
     statsText.style.backgroundColor = parsedData.color;
+    const smth = document.getElementById('smth');
+    console.log(parsedData.color)
+    // Parse the color string into its RGBA components
+    var rgbaValues = parsedData.color.replace(/rgba?\(|\)/g, '').split(',');
+
+    // Update the alpha component to 0.5
+    rgbaValues[3] = '1';
+
+    // Reconstruct the color string with the updated alpha component
+    parsedData.color = 'rgba(' + rgbaValues.join(',') + ')';
+
+
+    smth.style.color = parsedData.color;
+
+
 }
 
 
 
 function addItem() {
+    
     if (inputText.value.trim().length === 0) {
         return;
     }
@@ -236,8 +268,9 @@ function addItem() {
     const post = {
         time: Date.now(),
         text: inputText.value.replace(/\n/g, '\\n'),
-        color: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 0.25)`,
+        color: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 0.30)`,
     } 
+    inputText.value = '';
 
     fetch('save-to-database.php', { 
         method: 'POST', 
@@ -257,35 +290,15 @@ function addItem() {
         // Set the background color of the li element to the saved color
         li.style.backgroundColor = parsedData.color;
 
-   
-        /// Create a new Date object from the addedAt timestamp
-        const addedAt = parsedData.time
-        // Calculate the number of days between the current date and the addedAt date
-        const currentDate = Date.now();
-        const timeDiff = currentDate - addedAt;
-        const diffSeconds = Math.ceil(timeDiff / (1000));
-
-        let diffMinutes = Math.ceil(diffSeconds / 60);
-        let diffHours = Math.ceil(diffMinutes / 60);
-        let diffDays = Math.ceil(diffHours / 24);
-        
-        let timeSinceAdded = "";
-
-        if (diffSeconds <= 60) {
-            timeSinceAdded = `${diffSeconds}s`;
-        } else if (diffMinutes <= 60) {
-            timeSinceAdded = `${diffMinutes - 1}m`;
-        } else if (diffHours <= 24) {
-            timeSinceAdded = `${diffHours - 1}h`;
-        } else {
-            timeSinceAdded = `${diffDays - 1}d`;
-        }
-
         li.innerHTML = `<p class="content">${parsedData.text}</p>`;
+
+        const backGroundDiv = document.createElement('div');
+        backGroundDiv.setAttribute('class', 'background-div')
+        li.appendChild(backGroundDiv);
 
         // Create a new div element to wrap the timeSinceAdded and delete button
         const infoDiv = document.createElement('div');
-        infoDiv.innerHTML = `<p class="time">${timeSinceAdded}</p>`;
+        infoDiv.innerHTML = `<p class="time">NEW</p>`;
 
         // Create a new button element
         const deleteButton = document.createElement('button');
@@ -301,7 +314,6 @@ function addItem() {
 
         // Insert the li element to the beginning of the ul
         list.insertBefore(li, list.firstChild);
-        inputText.value = '';
     })
 
 }

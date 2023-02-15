@@ -1,8 +1,11 @@
-
+:root {
+    --bg-color-dark: rgb(28, 22, 13);
+    --primary-text-color: rgb(255, 251, 245);
+  }
 
 body {
     position: relative;
-    background-color: rgb(255, 251, 245);
+    background-color: var(--bg-color-dark);
 }
 .title-input-container > p {
     position: relative;
@@ -38,6 +41,9 @@ p {
     margin-bottom: 1rem;
     cursor: pointer;
 }
+#info-button svg path {
+    fill: var(--primary-text-color);
+}
 .info-svg {
     width: 1.5rem;
     height: 1.5rem;
@@ -53,6 +59,10 @@ p {
     width: 100%;
     height: 100%;
     margin-left: 2px;
+}
+
+.info-button-container > svg > path {
+    fill: var(--primary-text-color);
 }
 
 /* *********************************************************************************** */
@@ -71,9 +81,12 @@ p {
     cursor: pointer;
 }
 .stats-svg {
-    
     width: 1.5rem;
     height: 1.5rem;
+}
+
+.stats-svg path {
+    fill: var(--primary-text-color);
 }
 
 .beta {
@@ -98,7 +111,7 @@ p {
     line-height: 1.7rem;
     background-color: rgb(255, 251, 245);
     border-radius: 5px;
-    box-shadow: 0px 0px 0px 2px black, 0px 0px 0px 6px rgb(255, 251, 245);
+    box-shadow: 0px 0px 0px 2px var(--bg-color-dark), 0px 0px 0px 6px var(--primary-text-color);
     margin-top: 0;
     margin-bottom: 0;
 
@@ -121,7 +134,7 @@ p {
 }
 .description-div {
     position: relative;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 50px 100px -20px, rgba(245, 245, 245, 0.3) 0px 30px 60px -30px;
 }
 #close-container {
     padding: .5rem;
@@ -149,7 +162,7 @@ p {
     line-height: 1.3rem;
     background-color: rgb(255, 251, 245);
     border-radius: 5px;
-    box-shadow: 0px 0px 0px 2px black, 0px 0px 0px 6px rgb(255, 251, 245);
+    box-shadow: 0px 0px 0px 2px var(--bg-color-dark), 0px 0px 0px 6px var(--primary-text-color);
     margin-top: 0;
     margin-bottom: 0;
 
@@ -186,7 +199,7 @@ p {
 }
 .stats-div {
     position: relative;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 50px 100px -20px, rgba(255, 255, 255, 0.3) 0px 30px 60px -30px;
 }
 #close-stats-container {
     padding: .5rem;
@@ -231,7 +244,10 @@ svg {
     margin: auto;
     z-index: 999;
     transition: all 0.5s ease;
-    background-color: rgb(255, 251, 245);
+    background-color: var(--bg-color-dark);
+}
+.main-container p {
+    color: var(--primary-text-color);
 }
 
 .main-container.hide {
@@ -242,15 +258,35 @@ svg {
 }
 
 h1 {
+    color: var(--primary-text-color);
     font-family: 'Righteous', cursive;
     text-align: left;
     margin: 0.5rem auto;
+}
+
+h1 .say {
+    position: relative;
+}
+h1 .say .title-background-div {
+    display: none;
+    margin-top: 0.1rem;
+    border-radius: inherit;
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: white;
 }
 
 .title-input-container{
     display: flex;
     flex-direction: column;
     padding: 1rem 2rem;
+}
+.title-input-container .something {
+    color: var(--primary-text-color);
 }
 
 .input-btn-container {
@@ -263,7 +299,7 @@ h1 {
 }
 .shadow-container {
     width: 100%;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    box-shadow: rgba(0, 0, 0, 0.217) 0px 6px 12px -2px, rgba(110, 58, 58, 0.432) 0px 3px 7px -3px;
     border-radius: 5px;
     display: flex;
     justify-content: center;
@@ -271,7 +307,7 @@ h1 {
     height: 2rem;
     overflow: hidden;
 }
-
+  
 
 input {
     z-index: 9999;
@@ -306,12 +342,12 @@ input:focus-visible {
     justify-content: center;
     padding: 0;
     cursor: pointer;
+    position: relative;
 }
 #addButton .background-div {
-    display: none;
     border-radius: inherit;
     z-index: -1;
-    background: none;
+    background-color: white;
     position: absolute;
     top: 0;
     left: 0;
@@ -321,14 +357,12 @@ input:focus-visible {
 
 
 
-
 .say {
     color: transparent;
 }
 .something {
     color: black;
 }
-
 
 
 
@@ -362,9 +396,6 @@ input:focus-visible {
     width: 100%;
     height: 100%;
 }
-.title-background-div {
-    display: none;
-}
 
 ul > li {
     position: relative;
@@ -375,7 +406,7 @@ ul > li {
     padding: .5rem;
     margin-top: .75rem;
     border-radius: 5px;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    box-shadow: rgba(242, 242, 242, 0.539) 0px 2px 5px -1px, rgba(255, 255, 255, 0.524) 0px 1px 3px -1px;
 }
 
 ul > li > div {
