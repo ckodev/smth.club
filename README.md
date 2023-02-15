@@ -13,6 +13,7 @@ The idea behind the game is that any post that takes the record of longest post,
   * clicking on the longest post subtitle also opens the longest post menu. 
 
 ## Future Features
+* Dark Mode - style sheet is ready but i haven't decided how to implement it yet. Listen for user browser setting's or to have it as a user selected option. I like the light mode as the initial mode and thought about having dark mode as an easter hidden somewhere...
 * Hall of fame 
   * I want the `crown` button to navigate to a second page that displays a list of all the longest post's, there content and the length of time they existed for.
   * I also want to be able to sort them by `longest post` AND `time spent in the longest post position` ... so how long the post was the "longest post" before another post over took it. 
