@@ -21,12 +21,13 @@ The idea behind the game is that any post that takes the record of longest post,
 * A fork of the same game but with images instead of text. 
 
 ## Issues 
-* At the moment when longest post rolls over to 1 day, it displays `23h 0m` until it reaches `23h 1m` then it displays `1d 0h 1m` This last one is the desired display. 
+* At the moment when longest post rolls over to 1 day, it displays `23h 0m` until it reaches `23h 1m` then it displays `1d 0h 1m` The last one is the desired display. 
+* If somehow a post we're to last a year it would read `366d #h #m` instead of `1y #d #h`
 * Emoji support - Currently some emoji's work but most do not and there seems to be discrepencies between mobile and desktop. 
 * General code review - I am a novice dev and any review would be much appreciated 
 * Security and bot's 
   * There's nothing preventing someone creating a bot that is designed to just delete every post or start injecting posts a crazy rate which would wreck the game. 
-  * The post's are saved into a MySQL database and I have done some sanitization to prevent injecttion attacks but i am sure there is more work here that needs to be done. 
+  * The post's are saved into a MySQL database and I have done some sanitization to prevent injection attacks but i am sure there is more work here that needs to be done. 
 
 ## Database Table's for Local Env. 
 The database set up includes two tables. The `FIRST` of which saves all new posts while the `SECOND` saves the longest post. 
