@@ -1,8 +1,8 @@
 # smth.club
 
-smth.club is an anonymous social game where players compete for the title of longest post. Every player has the ability to add and delete form the list. 
+smth.club is an anonymous public list / social game where players compete for the title of longest post. Every player has the ability to add and delete items from the list. 
 
-The idea behind the game is that any post that takes the record of longest post, did so because all of the other players chose not to delete it. THERE IS NOTHING STOPPING ANYBODY SHOWING UP AND DELETING EVERY POST. 
+The idea behind the game is that any post that takes the record of longest post, did so because all of the other players chose not to delete it. THERE IS NOTHING STOPPING ANYBODY SHOWING UP AND DELETING EVERY POST. This is part of the game.  
 
 All players are equal.
 
