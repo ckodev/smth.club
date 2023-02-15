@@ -4,6 +4,8 @@ smth.club is an anonymous social game where players compete for the title of lon
 
 The idea behind the game is that any post that takes the record of longest post, did so because all of the other players chose not to delete it. THERE IS NOTHING STOPPING ANYBODY SHOWING UP AND DELETING EVERY POST. 
 
+All players are equal.
+
 ## Current Features
 * Each post shows the length of time it has existed for, has a delete button and takes on a random color. 
 * The longest post subtitle shows the length of time of the longest post. 
@@ -13,11 +15,15 @@ The idea behind the game is that any post that takes the record of longest post,
   * clicking on the longest post subtitle also opens the longest post menu. 
 
 ## Future Features
+
 * Dark Mode - style sheet is ready but i haven't decided how to implement it yet. Listen for user browser setting's or to have it as a user selected option. I like the light mode as the initial mode and thought about having dark mode as an easter hidden somewhere...
 * Hall of fame 
   * I want the `crown` button to navigate to a second page that displays a list of all the longest post's, there content and the length of time they existed for.
   * I also want to be able to sort them by `longest post` AND `time spent in the longest post position` ... so how long the post was the "longest post" before another post over took it. 
-
+* A rescue button for top 3 posts.
+  * change the `trash` icon to some other icon and set a timer for some amount of time where players can "rescue" the post. 
+  * Once rescued, it's status is restored until someone tries to delete it again. 
+   * Different amount of time for top 3. So top spot `1 - minute` 2nd spot `30 - seconds` 3rd spot `10 - seconds` all other posts get deleted instantly. 
 * A fork of the same game but with images instead of text. 
 
 ## Issues 
