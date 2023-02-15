@@ -28,6 +28,9 @@ The idea behind the game is that any post that takes the record of longest post,
 
 ## Database Table's for Local Env. 
 The database set up includes two tables. The `FIRST` of which saves all new posts while the `SECOND` saves the longest post. 
+
+It's also important to note that the `TIME` in the second table is the difference between the time the post was created and Date.now() which is equal to the length of time the post existed for. 
+
 * Database name: `your_database_name`
   * table 1: `say_somthing`
     * id: Auto increment type = `INT`
