@@ -50,21 +50,6 @@ button.addEventListener("click", function() {
     }
 });
 
-window.onload = function() {
-    // Generate random color with 25% transparency for the add button
-    function getRandomColor() {
-        var letters = "0123456789ABCDEF";
-        var color = "#";
-        for (var i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color + "40";
-    }
-    
-    // Set the color of the add button
-    document.getElementById("addButton").style.backgroundColor = getRandomColor();
-};
-
 
 
 // Show message when user has reached max character limit
@@ -241,6 +226,7 @@ function updateLongestPost(parsedData) {
     subtitle.innerHTML = `Longest Post: <span class="front-page-time">${postLength}</span>`;
     statsText.style.backgroundColor = parsedData.color;
     const smth = document.getElementById('smth');
+    
     console.log(parsedData.color)
     // Parse the color string into its RGBA components
     var rgbaValues = parsedData.color.replace(/rgba?\(|\)/g, '').split(',');
@@ -251,6 +237,22 @@ function updateLongestPost(parsedData) {
     // Reconstruct the color string with the updated alpha component
     parsedData.color = 'rgba(' + rgbaValues.join(',') + ')';
 
+    document.getElementById("addButton").style.backgroundColor = parsedData.color;
+
+    const addSvg = document.querySelector('.add-btn-path');
+    const addButton = document.getElementById('addButton');
+    const background = getComputedStyle(addButton).backgroundColor; // get the background color of the button element
+    const rgb = background.match(/\d+/g); // extract the red, green, and blue values of the color
+    const luminance = 0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2]; // calculate the relative luminance
+
+    console.log('background:', background);
+    console.log('luminance:', luminance);
+
+    if (luminance < 100) {
+    addSvg.style.fill = 'white'; // use a light color for the fill
+    } else {
+    addSvg.style.fill = 'black'; // use a dark color for the fill
+    }
 
     smth.style.color = parsedData.color;
 

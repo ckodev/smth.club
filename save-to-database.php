@@ -24,52 +24,44 @@ if (!$conn) {
 
 // Set the connection charset to UTF-8
 mysqli_set_charset($conn, 'utf8');
- // Replace multiple backslashes with a single backslash character
- $text = preg_replace('/\\\\+/', '\\\\', $text);
 
-$text = str_replace(array("\r\n", "\r", "\n", "\"", "'", ";", "%"), array('\n', '\n', '\n', '\"', "\'", '\;', '\%'), $text);
+// Prepare the SQL statement with placeholders for the input values
+$sql = "INSERT INTO say_something (text, time, color) VALUES (?, ?, ?)";
+$stmt = mysqli_prepare($conn, $sql);
 
+// Bind the input values to the prepared statement
+mysqli_stmt_bind_param($stmt, "sis", $text, $time, $color);
 
-$text = mysqli_real_escape_string($conn, $text);
+// Execute the prepared statement
+if (mysqli_stmt_execute($stmt)) {
 
+    // Get the newly inserted entry from the database
+    $sql = "SELECT * FROM say_something ORDER BY time DESC LIMIT 1";
+    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        $id = $row['id'];
+        $text = $row['text'];
+        $time = $row['time'];
+        $color = $row['color'];
 
-// Insert text, time and color into the database
-$sql = "INSERT INTO say_something (text, time, color) VALUES ('$text', '$time', '$color')";
-
-if (mysqli_query($conn, $sql)) {
-
-     // Get the newly inserted entry from the database
-     $sql = "SELECT * FROM say_something ORDER BY time DESC LIMIT 1";
-     $result = mysqli_query($conn, $sql);
-     if (mysqli_num_rows($result) > 0) {
-         $row = mysqli_fetch_assoc($result);
-         $id = $row['id'];
-         $text = $row['text'];
-         $time = $row['time'];
-         $color = $row['color'];
-
-         // Replace multiple backslashes with a single backslash character
+        // Replace multiple backslashes with a single backslash character
         $text = preg_replace('/\\\\+/', '\\\\', $text);
 
         // Decode newline characters, double quotes, single quotes, semicolons, and percent signs
         $text = str_replace(array('\n', '\"', "\'", '\;', '\%', '\n'), array("\n", '"', "'", ';', '%', '<br>'), $text);
-         
-        
 
-         
-         // Encode the result as a JSON object and send it back to the front-end
-         $response = array('id' => $id, 'text' => $text, 'time' => $time, 'color' => $color);
-         echo json_encode($response);
-     }
+        // Encode the result as a JSON object and send it back to the front-end
+        $response = array('id' => $id, 'text' => $text, 'time' => $time, 'color' => $color);
+        echo json_encode($response);
+    }
 
 } else {
     echo "Error: " . $sql . "<br>" . mysqli_error($conn);
 }
 
-
-
-// Close the database connection
+// Close the prepared statement and the database connection
+mysqli_stmt_close($stmt);
 mysqli_close($conn);
-
 
 ?>

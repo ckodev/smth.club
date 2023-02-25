@@ -60,7 +60,7 @@ if (mysqli_query($conn, $sql)) {
      }
      $sql = "DELETE FROM post_stats WHERE time NOT IN (
         SELECT time FROM (
-            SELECT time FROM post_stats ORDER BY time DESC LIMIT 10
+            SELECT time FROM post_stats ORDER BY time DESC LIMIT 1
         ) subquery
     )";
     $result = mysqli_query($conn, $sql);
